@@ -49,6 +49,7 @@ class TestOPEAGenerator:
     def test_init_with_parameters(self):
         generator = OPEAGenerator(
             api_url="http://myurl:9009/v1",
+            model_id="intel_best_model_3B",
             model_arguments={
                 "temperature": 0.2,
                 "top_p": 0.7,
@@ -71,6 +72,7 @@ class TestOPEAGenerator:
     def test_to_dict(self):
         init_parameters = {
             "api_url": "http://localhost:9009/v1",
+            "model_id": "intel_best_model_3B",
             "model_arguments": {},
         }
         generator = OPEAGenerator()

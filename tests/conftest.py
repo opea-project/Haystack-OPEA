@@ -11,8 +11,8 @@ from haystack_opea.utils import OPEABackend
 
 
 class MockBackend(OPEABackend):
-    def __init__(self, model_kwargs: Optional[Dict[str, Any]] = None):
-        super().__init__(api_url="", model_kwargs=model_kwargs or {})
+    def __init__(self, model_id="intel_the_best", model_kwargs: Optional[Dict[str, Any]] = None):
+        super().__init__(api_url="", model_id=model_id, model_kwargs=model_kwargs or {})
 
     def embed(self, texts):
         inputs = texts

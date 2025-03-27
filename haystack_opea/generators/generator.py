@@ -17,6 +17,8 @@ class OPEAGenerator:
     Generates text using generative models provided by
     [OPEA](https://opea.dev).
 
+    Model ID only relevant for specific backends.
+
     ### Usage example
 
     ```python
@@ -24,6 +26,7 @@ class OPEAGenerator:
 
     generator = OPEAGenerator(
         "http://localhost:9009",
+        "Intel/neural-chat-7b-v3-3",
         model_arguments={
             "temperature": 0.2,
             "top_p": 0.7,
@@ -43,6 +46,7 @@ class OPEAGenerator:
     def __init__(
         self,
         api_url: str = _DEFAULT_API_URL,
+        model_id: Optional[str] = "",
         model_arguments: Optional[Dict[str, Any]] = None,
     ):
         """Create a OPEAGenerator component.
@@ -56,6 +60,7 @@ class OPEAGenerator:
             to find the arguments it accepts.
         """
         self._api_url = url_validation(api_url, _DEFAULT_API_URL, ["v1/chat/completions"])
+        self._model_id = model_id or ""
         self._model_arguments = model_arguments or {}
 
         self._backend: Optional[Any] = None
@@ -67,6 +72,7 @@ class OPEAGenerator:
 
         self._backend = OPEABackend(
             api_url=self._api_url,
+            model_id=self._model_id,
             model_kwargs=self._model_arguments,
         )
 

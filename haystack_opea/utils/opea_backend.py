@@ -9,11 +9,7 @@ REQUEST_TIMEOUT = 60
 
 
 class OPEABackend:
-    def __init__(
-        self,
-        api_url: str,
-        model_kwargs: Optional[Dict[str, Any]] = None,
-    ):
+    def __init__(self, api_url: str, model_kwargs: Optional[Dict[str, Any]] = None, model_id: Optional[str] = ""):
         headers = {
             "Content-Type": "application/json",
             "accept": "application/json",
@@ -24,6 +20,7 @@ class OPEABackend:
 
         self.api_url = api_url
         self.model_kwargs = model_kwargs or {}
+        self.model_id = model_id or ""
 
     def embed(self, inputs: List[str]) -> Tuple[List[List[float]], Dict[str, Any]]:
         url = f"{self.api_url}/embeddings"
@@ -63,7 +60,7 @@ class OPEABackend:
                             "content": prompt,
                         },
                     ],
-                    "model": "hi",
+                    "model": self.model_id,
                     **self.model_kwargs,
                 },
                 timeout=REQUEST_TIMEOUT,
