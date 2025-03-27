@@ -8,7 +8,7 @@ from haystack import component
 
 from haystack_opea.utils import OPEABackend, url_validation
 
-_DEFAULT_API_URL = "http://localhost:9009"
+_DEFAULT_API_URL = "http://localhost:9009/v1/chat/completions"
 
 
 @component

@@ -43,7 +43,7 @@ class TestOPEAGenerator:
     def test_init_default(self):
         generator = OPEAGenerator()
 
-        assert generator._api_url == "http://localhost:9009"
+        assert generator._api_url == "http://localhost:9009/v1/chat/completions"
         assert generator._model_arguments == {}
 
     def test_init_with_parameters(self):

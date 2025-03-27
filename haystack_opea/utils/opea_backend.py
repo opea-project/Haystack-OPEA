@@ -51,7 +51,7 @@ class OPEABackend:
         return embedding, meta
 
     def generate(self, prompt: str) -> Tuple[List[str], List[Dict[str, Any]]]:
-        url = f"{self.api_url}/v1/chat/completions"
+        url = f"{self.api_url}/chat/completions"
 
         try:
             res = self.session.post(
@@ -63,6 +63,7 @@ class OPEABackend:
                             "content": prompt,
                         },
                     ],
+                    "model": "hi",
                     **self.model_kwargs,
                 },
                 timeout=REQUEST_TIMEOUT,
