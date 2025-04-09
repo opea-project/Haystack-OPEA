@@ -1,11 +1,11 @@
-﻿# Running Langchain OPEA SDK with OPEA microservices
+﻿# Running Haystack OPEA SDK with OPEA microservices
 
-The OPEA Langchain SDK facilitates effortless interaction with open-source large language models, such as Llama 3, directly on your local machine. To leverage the SDK, you need to deploy an OpenAI compatible model serving.
+The OPEA Haystack SDK facilitates effortless interaction with open-source large language models, such as Llama 3, directly on your local machine. To leverage the SDK, you need to deploy an OpenAI compatible model serving.
 This local microservice deployment is crucial for harnessing the power of advanced language models while ensuring data privacy, reducing latency, and providing the flexibility to select models without relying on external APIs.
 
 ## 1. Starting the microservices using compose
 
-A prerequisite for using Langchain OPEA SDK is that users must have OpenAI compatible LLM text/embeddings generation service (etc., TGI, vLLM) already running. Langchain OPEA SDK package uses these deployed endpoints to help create end to end enterprise generative AI solutions.
+A prerequisite for using Haystack OPEA SDK is that users must have OpenAI compatible LLM text/embeddings generation service (etc., TGI, vLLM) already running. Haystack OPEA SDK package uses these deployed endpoints to help create end-to-end enterprise generative AI solutions.
 
 This approach offers several benefits:
 
@@ -20,13 +20,13 @@ To run the services, set up the environment variables:
 ```bash
 export EMBEDDING_MODEL_ID="BAAI/bge-base-en-v1.5"
 export HUGGINGFACEHUB_API_TOKEN=$HUGGINGFACEHUB_API_TOKEN
-export LLM_MODEL_ID="Intel/neural-chat-7b-v3-3"
+export LLM_MODEL_ID="Qwen/Qwen2.5-7B-Instruct"
 ```
 
 Run Docker Compose:
 
 ```bash
-docker compose up -d
+docker compose up
 ```
 
 ## 2. Check the services are up and running
@@ -42,13 +42,13 @@ curl ${host_ip}:6006/v1/embeddings \
 # TGI service
 curl http://${host_ip}:9009/v1/chat/completions \
     -X POST \
-    -d '{"model": "Intel/neural-chat-7b-v3-3", "messages": [{"role": "user", "content": "What is Deep Learning?"}], "max_tokens":17}' \
+    -d '{"model": "Qwen/Qwen2.5-7B-Instruct", "messages": [{"role": "user", "content": "What is Deep Learning?"}], "max_tokens":50}' \
     -H 'Content-Type: application/json'
 ```
 
-## 3. Install Langchain OPEA package
+## 3. Install Haystack OPEA package
 
-You can install LangChain OPEA package in several ways:
+You can install Haystack OPEA package in several ways:
 
 ### Install from Source
 
@@ -63,13 +63,13 @@ pip install poetry && poetry install --with test
 To install the package from a pre-built wheel, run:
 
 1. **Build the Wheels**: Ensure the wheels are built using Poetry.
-   ```bash
-   poetry build
-   ```
+    ```bash
+    poetry build
+    ```
 2. **Install via Wheel File**: Install the package using the generated wheel file.
-   ```bash
-   pip install dist/langchain_opea-0.1.0-py3-none-any.whl
-   ```
+    ```bash
+    pip install dist/haystack_opea-0.1.0-py3-none-any.whl
+    ```
 
 ## 4. Install Jupyter Notebook
 
@@ -85,6 +85,6 @@ Start Jupyter Notebook:
 jupyter notebook
 ```
 
-Open the [`summarize.ipynb`](./summarize.ipynb) notebook and run the cells to execute the summarization example.
+Open the [News Summary](./news_summary.ipynb) notebook and run summarization example.
 
-Open the [`qa_streaming.ipynb`](./qa_streaming.ipynb) notebook and run the cells to execute the QA chatbot with retrieval example.
+Open the [Movies RAG](./movies_rag.ipynb) notebook and run RAG example.
