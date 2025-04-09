@@ -68,7 +68,7 @@ class TestOPEATextEmbedder:
 
         list_integers_input = [1, 2, 3]
 
-        with pytest.raises(TypeError, match="OPEATextEmbedder expects a string or list of strings as an input."):
+        with pytest.raises(TypeError, match="OPEATextEmbedder expects a string as an input."):
             embedder.run(text=list_integers_input)
 
     @pytest.mark.skipif(
@@ -82,7 +82,7 @@ class TestOPEATextEmbedder:
 
         results = embedder.run(text="The food was delicious")
 
-        assert all(isinstance(x, float) for embedding in results["embedding"] for x in embedding)
+        assert all(isinstance(emb, float) for emb in results["embedding"])
 
         # assert "text" in result["meta"]["model"] and "ada" in result["meta"]["model"], (
         #     "The model name does not contain 'text' and 'ada'"
