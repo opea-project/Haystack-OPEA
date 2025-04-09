@@ -19,20 +19,24 @@ pip install poetry && poetry install --with test
 To install the package from a pre-built wheel, run:
 
 1. **Build the Wheels**: Ensure the wheels are built using Poetry.
-   ```bash
-   poetry build
-   ```
+    ```bash
+    poetry build
+    ```
 2. **Install via Wheel File**: Install the package using the generated wheel file.
-   ```bash
-   pip install dist/haystack_opea-0.1.0-py3-none-any.whl
-   ```
+    ```bash
+    pip install dist/haystack_opea-0.1.0-py3-none-any.whl
+    ```
+
+## Examples
+
+See [Examples][./samples/] folder for a RAG and summarization notebooks, including a simple docker compose configuration for starting the OPEA backend.
 
 ## Embeddings
 
 The classes `OPEADocumentEmbedder` and `OPEATextEmbedder` are introduced.
 
 ```python
-from haystack_opea.embedders.tei import OPEATextEmbedder
+from haystack_opea import OPEATextEmbedder
 
 text_to_embed = "I love pizza!"
 
@@ -46,7 +50,7 @@ And similarly:
 
 ```python
 from haystack import Document
-from haystack_opea.embedders.tei import OPEADocumentEmbedder
+from haystack_opea import OPEADocumentEmbedder
 
 doc = Document(content="I love pizza!")
 
@@ -62,7 +66,7 @@ print(result["documents"][0].embedding)
 The class `OPEAGenerator` is introduced:
 
 ```python
-from haystack_opea.generators import OPEAGenerator
+from haystack_opea import OPEAGenerator
 
 generator = OPEAGenerator(
     "http://localhost:9009",
