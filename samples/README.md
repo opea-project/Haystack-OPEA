@@ -85,6 +85,6 @@ Start Jupyter Notebook:
 jupyter notebook
 ```
 
-Open the [News Summary](./news_summary.ipynb) notebook and run summarization example.
+Open the [News Summary](./news-summary.ipynb) notebook and run summarization example.
 
-Open the [Movies RAG](./movies_rag.ipynb) notebook and run RAG example.
+Open the [Movies RAG](./movies-RAG.ipynb) notebook and run RAG example.
