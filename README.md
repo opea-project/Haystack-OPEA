@@ -31,7 +31,7 @@ To install the package from a pre-built wheel, run:
 
 ## Examples
 
-See [Examples][./samples/] folder for a two example notebooks, using an OPEA LLM and text embedder. The folder includes a docker compose configuration for starting the OPEA backend.
+See the [Examples](./samples/) folder; it contains two jupyter notebooks, using an OPEA LLM and text embedder. The folder also includes a docker compose configuration for starting the OPEA backend.
 
 ## Embeddings
 
