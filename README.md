@@ -1,6 +1,8 @@
 # Haystack-OPEA
 
-This package contains the Haystack integrations for OPEA Compatible [OPEA](https://opea.dev/) Microservices.
+This package contains the Haystack integrations for OPEA Compatible [OPEA](https://opea.dev/) Microservices. At its core, OPEA offers a suite of containerized microservices—including components for LLMs, embedding, retrieval, and reranking—that can be orchestrated to build sophisticated AI workflows like Retrieval-Augmented Generation (RAG). These microservices are designed for flexibility, supporting deployment across various environments such as cloud platforms, data centers, and edge devices.​
+
+For more information, see [Getting Started with OPEA](https://opea-project.github.io/latest/getting-started/README.html), [OPEA Components](https://github.com/opea-project/GenAIComps) and [Full Examples](https://github.com/opea-project/GenAIExamples).
 
 ## Installation
 
@@ -29,7 +31,7 @@ To install the package from a pre-built wheel, run:
 
 ## Examples
 
-See [Examples][./samples/] folder for a RAG and summarization notebooks, including a simple docker compose configuration for starting the OPEA backend.
+See [Examples][./samples/] folder for a two example notebooks, using an OPEA LLM and text embedder. The folder includes a docker compose configuration for starting the OPEA backend.
 
 ## Embeddings
 
