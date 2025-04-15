@@ -1,4 +1,5 @@
-﻿#!/bin/bash
+#!/bin/bash
+
 # Copyright (C) 2025 Intel Corporation
 # SPDX-License-Identifier: Apache-2.0
 
@@ -24,10 +25,9 @@ function build_integration_package() {
 }
 
 function start_service() {
-    export hf_llm_model="Intel/neural-chat-7b-v3-3"
+  export hf_llm_model="Intel/neural-chat-7b-v3-3"
   tei_endpoint=6006
   model="BAAI/bge-base-en-v1.5"
-  unset http_proxy
   docker run -d --name="test-comps-integration-embedding-endpoint" -p $tei_endpoint:80 -v ./data:/data --pull always ghcr.io/huggingface/text-embeddings-inference:cpu-1.5 --model-id $model
   sleep 10s
 
@@ -89,7 +89,7 @@ function validate_service() {
 
 function validate_package() {
   cd "$WORKPATH/"
-  poetry run pytest --asyncio-mode=auto tests/
+  poetry run pytest tests/
   if [ $? -ne 0 ]; then
     echo "Package Tests failed"
     exit 1
