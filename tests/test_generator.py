@@ -86,7 +86,6 @@ class TestOPEAGenerator:
         not os.environ.get("OPEA_GENERATOR_ENDPOINT_URL", None),
         reason="Export an env var called OPEA_GENERATOR_ENDPOINT_URL containing the URL to call.",
     )
-    @pytest.mark.integration
     def test_run_integration_with_opea_backend(self):
         url = os.environ["OPEA_GENERATOR_ENDPOINT_URL"]
         generator = OPEAGenerator(
@@ -101,7 +100,6 @@ class TestOPEAGenerator:
         assert result["replies"]
         assert result["meta"]
 
-    @pytest.mark.integration
     @pytest.mark.usefixtures("mock_local_chat_completion")
     def test_run_integration_with_default_model_opea_backend(self):
         url = "http://localhost:9009"

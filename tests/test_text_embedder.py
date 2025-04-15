@@ -75,7 +75,6 @@ class TestOPEATextEmbedder:
         not os.environ.get("OPEA_EMBEDDING_ENDPOINT_URL", None),
         reason="Export an env var called OPEA_EMBEDDING_ENDPOINT_URL containing the OPEA embedding endpoint url to run this test.",
     )
-    @pytest.mark.integration
     def test_run(self):
         embedder = OPEATextEmbedder(prefix="prefix ", suffix=" suffix")
         embedder.warm_up()
