@@ -28,13 +28,13 @@ function start_service() {
   export hf_llm_model="Qwen/Qwen2.5-0.5B"
   tei_endpoint=6006
   model="BAAI/bge-base-en-v1.5"
-  docker run -d --name="test-comps-integration-embedding-endpoint" -p $tei_endpoint:80 -v ./data:/data --pull always ghcr.io/huggingface/text-embeddings-inference:cpu-1.5 --model-id $model
+  docker run -d --name="test-comps-integration-embedding-endpoint" -p $tei_endpoint:80 -v ./data:/data --pull always ghcr.io/huggingface/text-embeddings-inference:cpu-latest --model-id $model
   sleep 10s
 
   tgi_endpoint_port=9009
   # Remember to set HF_TOKEN before invoking this test!
   export HF_TOKEN=${HF_TOKEN}
-  docker run -d --name="test-comps-integration-llm-tgi-endpoint" -p $tgi_endpoint_port:80 -v ~/.cache/huggingface/hub:/data --shm-size 1g -e HF_TOKEN=${HF_TOKEN} ghcr.io/huggingface/text-generation-inference:3.2.3-intel-cpu --model-id ${hf_llm_model} --max-input-tokens 1024 --max-total-tokens 2048
+  docker run -d --name="test-comps-integration-llm-tgi-endpoint" -p $tgi_endpoint_port:80 -v ~/.cache/huggingface/hub:/data --shm-size 1g -e HF_TOKEN=${HF_TOKEN} ghcr.io/huggingface/text-generation-inference:latest-intel-cpu --model-id ${hf_llm_model} --max-input-tokens 1024 --max-total-tokens 2048
   # check whether tgi is fully ready
   n=0
 
