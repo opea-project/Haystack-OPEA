@@ -25,7 +25,7 @@ function build_integration_package() {
 }
 
 function start_service() {
-  export hf_llm_model="Intel/neural-chat-7b-v3-3"
+  export hf_llm_model="Qwen/Qwen2.5-0.5B"
   tei_endpoint=6006
   model="BAAI/bge-base-en-v1.5"
   docker run -d --name="test-comps-integration-embedding-endpoint" -p $tei_endpoint:80 -v ./data:/data --pull always ghcr.io/huggingface/text-embeddings-inference:cpu-1.5 --model-id $model
@@ -75,7 +75,7 @@ function validate_service() {
 
   result=$(http_proxy="" curl http://${ip_address}:${llm_port}/v1/chat/completions \
     -X POST \
-    -d '{"model": "Intel/neural-chat-7b-v3-3", "messages": [{"role": "user", "content": "What is Deep Learning?"}], "max_tokens":17, "stream":false}' \
+    -d '{"model": "Qwen/Qwen2.5-0.5B", "messages": [{"role": "user", "content": "What is Deep Learning?"}], "max_tokens":17, "stream":false}' \
     -H 'Content-Type: application/json')
   if [[ $result == *"content"* ]]; then
     echo "Result correct."
