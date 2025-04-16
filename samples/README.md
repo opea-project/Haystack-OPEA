@@ -21,6 +21,8 @@ To run the services, set up the environment variables:
 export EMBEDDING_MODEL_ID="BAAI/bge-base-en-v1.5"
 export HUGGINGFACEHUB_API_TOKEN=$HUGGINGFACEHUB_API_TOKEN
 export LLM_MODEL_ID="Qwen/Qwen2.5-7B-Instruct"
+export EMBEDDER_PORT=6000
+export TEI_EMBEDDING_ENDPOINT="http://tei-embedding-serving:80"
 ```
 
 Run Docker Compose:
@@ -32,7 +34,7 @@ docker compose up
 ## 2. Check the services are up and running
 
 ```bash
-curl ${host_ip}:6006/v1/embeddings \
+curl ${host_ip}:6000/v1/embeddings \
     -X POST \
     -d '{"input":"What is Deep Learning?"}' \
     -H 'Content-Type: application/json'
@@ -40,9 +42,9 @@ curl ${host_ip}:6006/v1/embeddings \
 
 ```bash
 # TGI service
-curl http://${host_ip}:9009/v1/chat/completions \
+curl http://${host_ip}:9000/v1/chat/completions \
     -X POST \
-    -d '{"model": "Qwen/Qwen2.5-7B-Instruct", "messages": [{"role": "user", "content": "What is Deep Learning?"}], "max_tokens":50}' \
+    -d '{"model": "Qwen/Qwen2.5-7B-Instruct", "messages": "What is Deep Learning?", "max_tokens":50}' \
     -H 'Content-Type: application/json'
 ```
 
@@ -63,13 +65,16 @@ pip install poetry && poetry install --with test
 To install the package from a pre-built wheel, run:
 
 1. **Build the Wheels**: Ensure the wheels are built using Poetry.
-    ```bash
-    poetry build
-    ```
+
+   ```bash
+   poetry build
+   ```
+
 2. **Install via Wheel File**: Install the package using the generated wheel file.
-    ```bash
-    pip install dist/haystack_opea-0.1.0-py3-none-any.whl
-    ```
+
+   ```bash
+   pip install dist/haystack_opea-0.1.0-py3-none-any.whl
+   ```
 
 ## 4. Install Jupyter Notebook
 
