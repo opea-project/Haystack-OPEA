@@ -95,14 +95,14 @@ class OPEATextEmbedder:
         )
 
     @component.output_types(embedding=List[float])
-    def run(self, text: Union[str, List[str]]):
+    def run(self, text: str):
         """Embed a string or list of strings.
 
         :param text:
-            The text(s) to embed.
+            The text to embed.
         :returns:
             A dictionary with the following keys and values:
-            - `embedding` - Embeddngs of the text(s).
+            - `embedding` - Embeddngs of the text.
         :raises RuntimeError:
             If the component was not initialized.
         :raises TypeError:
@@ -111,9 +111,9 @@ class OPEATextEmbedder:
         if not self._initialized:
             msg = "The embedding model has not been loaded. Please call warm_up() before running."
             raise RuntimeError(msg)
-        elif not isinstance(text, (str, list)) or (isinstance(text, list) and not isinstance(text[0], str)):
+        elif not isinstance(text, str):
             msg = (
-                "OPEATextEmbedder expects a string or list of strings as an input."
+                "OPEATextEmbedder expects a string as an input."
                 "In case you want to embed a list of Documents, please use the OPEADocumentEmbedder."
             )
             raise TypeError(msg)
@@ -122,9 +122,7 @@ class OPEATextEmbedder:
             raise ValueError(msg)
 
         assert self.backend is not None
-        if isinstance(text, str):
-            text = [text]
 
-        text_to_embed = [self.prefix + t + self.suffix for t in text]
+        text_to_embed = self.prefix + text + self.suffix
         embedding, metadata = self.backend.embed(text_to_embed)
-        return {"embedding": embedding, "meta": metadata}
+        return {"embedding": embedding[0], "meta": metadata}

@@ -1,0 +1,38 @@
+# Copyright (C) 2025 Intel Corporation
+# SPDX-License-Identifier: Apache-2.0
+
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, reopened, ready_for_review, synchronize]
+  workflow_dispatch:
+
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+
+    - name: Install dependencies
+      working-directory: ${{ github.workspace }}
+      run: |
+        pip install poetry
+        poetry install --with test
+
+    - name: Run tests
+      run: |
+        poetry run pytest tests/
+
+    - name: Run integration tests
+      working-directory: tests
+      run: |
+        chmod +x test_integration_haystack_opea.sh
+        ./test_integration_haystack_opea.sh

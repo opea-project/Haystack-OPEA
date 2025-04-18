@@ -146,7 +146,13 @@ class TestOPEADocumentEmbedder:
         ]
 
     def test_prepare_texts_to_embed_w_suffix(self):
-        documents = [Document(content=f"document number {i}") for i in range(5)]
+        documents = [
+            Document(
+                content=f"document number {
+                              i}"
+            )
+            for i in range(5)
+        ]
 
         embedder = OPEADocumentEmbedder(
             prefix="my_prefix ",
@@ -285,7 +291,6 @@ class TestOPEADocumentEmbedder:
         not os.environ.get("OPEA_EMBEDDING_ENDPOINT_URL", None),
         reason="Export an env var called OPEA_EMBEDDING_ENDPOINT_URL containing the OPEA embedding endpoint url to run this test.",
     )
-    @pytest.mark.integration
     def test_run_integration_with_opea_backend(self):
         url = os.environ["OPEA_EMBEDDING_ENDPOINT_URL"]
         embedder = OPEADocumentEmbedder(
