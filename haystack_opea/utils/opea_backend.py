@@ -61,6 +61,8 @@ class OPEABackend:
                         },
                     ],
                     "model": self.model_id,
+                    # TODO: remove this once upstream issue resolves
+                    "stream_options": {"include_usage": False},
                     **self.model_kwargs,
                 },
                 timeout=REQUEST_TIMEOUT,
