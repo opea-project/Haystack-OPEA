@@ -25,39 +25,44 @@ function build_integration_package() {
 }
 
 function start_service() {
-  export hf_llm_model="Qwen/Qwen2.5-0.5B"
-  tei_endpoint=6006
-  model="BAAI/bge-base-en-v1.5"
-  docker run -d --name="test-comps-integration-embedding-endpoint" -p $tei_endpoint:80 -v ./data:/data --pull always ghcr.io/huggingface/text-embeddings-inference:cpu-latest --model-id $model
-  sleep 10s
+  export EMBEDDING_MODEL_ID="BAAI/bge-base-en-v1.5"
+  export LLM_MODEL_ID="Qwen/Qwen2.5-0.5B"
+  export EMBEDDER_PORT=6000
+  export TEI_EMBEDDING_ENDPOINT="http://tei-embedding-serving:80"
+  docker compose -f $WORKPATH/samples/compose.yaml up -d
+  # export hf_llm_model="Qwen/Qwen2.5-0.5B"
+  # tei_endpoint=6006
+  # model="BAAI/bge-base-en-v1.5"
+  # docker run -d --name="test-comps-integration-embedding-endpoint" -p $tei_endpoint:80 -v ./data:/data --pull always ghcr.io/huggingface/text-embeddings-inference:cpu-latest --model-id $model
+  # sleep 10s
 
-  tgi_endpoint_port=9009
-  # Remember to set HF_TOKEN before invoking this test!
-  export HF_TOKEN=${HF_TOKEN}
-  docker run -d --name="test-comps-integration-llm-tgi-endpoint" -p $tgi_endpoint_port:80 -v ~/.cache/huggingface/hub:/data --shm-size 1g -e HF_TOKEN=${HF_TOKEN} ghcr.io/huggingface/text-generation-inference:latest-intel-cpu --model-id ${hf_llm_model} --max-input-tokens 1024 --max-total-tokens 2048
-  # check whether tgi is fully ready
-  n=0
+  # tgi_endpoint_port=9009
+  # # Remember to set HF_TOKEN before invoking this test!
+  # export HF_TOKEN=${HF_TOKEN}
+  # docker run -d --name="test-comps-integration-llm-tgi-endpoint" -p $tgi_endpoint_port:80 -v ~/.cache/huggingface/hub:/data --shm-size 1g -e HF_TOKEN=${HF_TOKEN} ghcr.io/huggingface/text-generation-inference:latest-intel-cpu --model-id ${hf_llm_model} --max-input-tokens 1024 --max-total-tokens 2048
+  # # check whether tgi is fully ready
+  # n=0
 
-  file=$LOG_PATH/test-comps-vllm-service.log
+  # file=$LOG_PATH/test-comps-vllm-service.log
 
-  if [ -f "$file" ]; then
-    rm "$file"
-  fi
+  # if [ -f "$file" ]; then
+  #   rm "$file"
+  # fi
 
-  until [[ "$n" -ge 100 ]] || [[ $ready == true ]]; do
-    docker logs test-comps-integration-llm-tgi-endpoint >>$LOG_PATH/test-comps-vllm-service.log
-    n=$((n + 1))
-    if grep -q Connected $LOG_PATH/test-comps-vllm-service.log; then
-      break
-    fi
-    sleep 5s
-  done
-  sleep 5s
+  # until [[ "$n" -ge 100 ]] || [[ $ready == true ]]; do
+  #   docker logs test-comps-integration-llm-tgi-endpoint >>$LOG_PATH/test-comps-vllm-service.log
+  #   n=$((n + 1))
+  #   if grep -q Connected $LOG_PATH/test-comps-vllm-service.log; then
+  #     break
+  #   fi
+  #   sleep 5s
+  # done
+  sleep 60s
 
 }
 
 function validate_service() {
-  tei_service_port=6006
+  tei_service_port=6000
 
   result=$(http_proxy="" curl http://${ip_address}:$tei_service_port/v1/embeddings \
     -X POST \
@@ -71,7 +76,7 @@ function validate_service() {
     exit 1
   fi
 
-  llm_port=9009
+  llm_port=9000
 
   result=$(http_proxy="" curl http://${ip_address}:${llm_port}/v1/chat/completions \
     -X POST \
@@ -116,7 +121,7 @@ function stop_docker() {
   cid=$(docker ps -aq --filter "name=test-comps-integration-*")
   if [[ ! -z "$cid" ]]; then docker stop $cid && docker rm $cid && sleep 1s; fi
 
-  ports=(6006 9009)
+  ports=(6006 9009 6000 9000)
   for port in "${ports[@]}"; do
     docker ps --format "{{.ID}}" | while read -r container_id; do
       if docker port "$container_id" | grep ":$port"; then
