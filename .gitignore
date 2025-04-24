@@ -1,2 +1,4 @@
 __pycache__
 /dist/
+samples/data
+.ipynb_checkpoints

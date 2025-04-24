@@ -1,6 +1,8 @@
 # Haystack-OPEA
 
-This package contains the Haystack integrations for OPEA Compatible [OPEA](https://opea.dev/) Microservices.
+This package contains the Haystack integrations for OPEA Compatible [OPEA](https://opea.dev/) Microservices. At its core, OPEA offers a suite of containerized microservices—including components for LLMs, embedding, retrieval, and reranking—that can be orchestrated to build sophisticated AI workflows like Retrieval-Augmented Generation (RAG). These microservices are designed for flexibility, supporting deployment across various environments such as cloud platforms, data centers, and edge devices.​
+
+For more information, see [Getting Started with OPEA](https://opea-project.github.io/latest/getting-started/README.html), [OPEA Components](https://github.com/opea-project/GenAIComps) and [Full Examples](https://github.com/opea-project/GenAIExamples).
 
 ## Installation
 
@@ -27,12 +29,16 @@ To install the package from a pre-built wheel, run:
     pip install dist/haystack_opea-0.1.0-py3-none-any.whl
     ```
 
+## Examples
+
+See the [Examples](./samples/) folder; it contains two jupyter notebooks, using an OPEA LLM and text embedder. The folder also includes a docker compose configuration for starting the OPEA backend.
+
 ## Embeddings
 
 The classes `OPEADocumentEmbedder` and `OPEATextEmbedder` are introduced.
 
 ```python
-from haystack_opea.embedders.tei import OPEATextEmbedder
+from haystack_opea import OPEATextEmbedder
 
 text_to_embed = "I love pizza!"
 
@@ -46,7 +52,7 @@ And similarly:
 
 ```python
 from haystack import Document
-from haystack_opea.embedders.tei import OPEADocumentEmbedder
+from haystack_opea import OPEADocumentEmbedder
 
 doc = Document(content="I love pizza!")
 
@@ -62,7 +68,7 @@ print(result["documents"][0].embedding)
 The class `OPEAGenerator` is introduced:
 
 ```python
-from haystack_opea.generators import OPEAGenerator
+from haystack_opea import OPEAGenerator
 
 generator = OPEAGenerator(
     "http://localhost:9009",
