@@ -6,13 +6,18 @@ build-backend = "poetry.core.masonry.api"
 requires-python = ">=3.9"
 dependencies = ["haystack-ai>=2,<3"]
 name = "haystack-opea"
-version = "0.1.0"
+version = "0.1.1"
 description = "An integration package connecting OPEA and Haystack"
-authors = [{ name = "Daniel Fleischer", email = "daniel.fleischer@intel.com" }]
+authors = [
+  { name = "Daniel Fleischer", email = "daniel.fleischer@intel.com" },
+  { name = "OPEA-Project" },
+]
 readme = "README.md"
 license = "Apache-2.0"
+
 [project.urls]
-repository = "https://github.com/deepset-ai/haystack/"
+Homepage = "https://github.com/deepset-ai/haystack/"
+Repository = "https://github.com/opea-project/Haystack-OPEA"
 
 [tool.mypy]
 disallow_untyped_defs = "True"
