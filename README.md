@@ -1,3 +1,7 @@
+![GitHub License](https://img.shields.io/github/license/opea-project/haystack-opea)
+![PyPI - Version](https://img.shields.io/pypi/v/haystack-opea)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/haystack-opea)
+
 # Haystack-OPEA
 
 This package contains the Haystack integrations for OPEA Compatible [OPEA](https://opea.dev/) Microservices. At its core, OPEA offers a suite of containerized microservices—including components for LLMs, embedding, retrieval, and reranking—that can be orchestrated to build sophisticated AI workflows like Retrieval-Augmented Generation (RAG). These microservices are designed for flexibility, supporting deployment across various environments such as cloud platforms, data centers, and edge devices.​
