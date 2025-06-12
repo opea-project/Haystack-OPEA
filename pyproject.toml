@@ -6,7 +6,7 @@ build-backend = "poetry.core.masonry.api"
 requires-python = ">=3.9"
 dependencies = ["haystack-ai>=2,<3", "h11 (>=0.16.0,<0.17.0)"]
 name = "haystack-opea"
-version = "0.1.1"
+version = "0.1.2"
 description = "An integration package connecting OPEA and Haystack"
 authors = [
   { name = "Daniel Fleischer", email = "daniel.fleischer@intel.com" },
